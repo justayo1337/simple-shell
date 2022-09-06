@@ -6,21 +6,21 @@
 
 char *read_cmd(void)
 {
-    char buf[1024];
+    char buff[1024];
     char *ptr = NULL;
     char ptrlen = 0;
 
-    while(fgets(buf, 1024, stdin))
+    while(fgets(buff, 1024, stdin))
     {
-        int buflen = strlen(buf);
+        int bufflen = strlen(buff);
 
         if(!ptr)
         {
-            ptr = malloc(buflen+1);
+            ptr = malloc(bufflen+1);
         }
         else
         {
-            char *ptr2 = realloc(ptr, ptrlen+buflen+1);
+            char *ptr2 = realloc(ptr, ptrlen+bufflen+1);
 
             if(ptr2)
             {
@@ -39,22 +39,21 @@ char *read_cmd(void)
             return NULL;
         }
 
-        strcpy(ptr+ptrlen, buf);
+        strcpy(ptr+ptrlen, buff);
 
-        if(buf[buflen-1] == '\n')
+        if(buff[bufflen-1] == '\n')
         {
-            if(buflen == 1 || buf[buflen-2] != '\\')
+            if(bufflen == 1 || buff[bufflen-2] != '\\')
             {
                 return ptr;
             }
 
-            ptr[ptrlen+buflen-2] = '\0';
-            buflen -= 2;
+            ptr[ptrlen+bufflen-2] = '\0';
+            bufflen -= 2;
             print_prompt2();
         }
 
-        ptrlen += buflen;
+        ptrlen += bufflen;
     }
-
     return ptr;
 }
